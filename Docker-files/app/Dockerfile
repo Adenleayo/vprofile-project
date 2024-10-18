@@ -7,7 +7,7 @@ RUN git clone https://github.com/Adenleayo/vprofile-project.git
 RUN cd vprofile-project && git switch docker && mvn install
 
 # run the artifact from #BUILD_IMAGE
-FROM tomcat:9-jre11
+FROM  tomcat:9.0.96-jre11
 RUN rm -rf /usr/local/tomcat/webapps/*
 COPY --from=build_image vprofile-project/target/vprofile-v2.war /usr/local/tomcat/webapps/ROOT.war
 
