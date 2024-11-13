@@ -63,10 +63,36 @@ pipeline {
                     -Dsonar.jacoco.reportsPath=target/jacoco.exec \
                     -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml'''
                 
-                } 
-                
-                
+                }   
+            }
+        }
+
+        stage('quality gates')  {
+            steps {
+                timeout(time: 1, unit: 'HOURS') {
+                    waitForQualityGate abortPipeline: true
+                }
             }
         }  
+
+        stage('Upload to Nexus') {
+            steps {
+                nexusArtifactUploader artifacts: [
+                    [
+                        artifactId: 'vproapp',
+                        classifier: '',
+                        file: "target/vprofile-v2.war",
+                        type: 'war'
+                    ]
+                ], 
+                credentialsId: '${NEXUS_LOGIN}', 
+                groupId: 'QA', 
+                nexusUrl: '${NEXUSIP}:${NEXUSPORT}', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'vprofile-release', 
+                version: '${env.BUILD_ID}-${env.BUILD_TIMESTAMP}'
+            }
+        }
     }
 }
