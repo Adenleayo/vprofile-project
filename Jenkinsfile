@@ -16,8 +16,8 @@ pipeline {
         NEXUSPORT = "8081"
         NEXUS_GRP_REPO = "vpro-maven2-group"
         NEXUS_LOGIN = "nexuslogin"
-        SONARSERVER = 'sonarserver'
-        SONNARSCANNER = 'sonar6.2'
+        SONARSERVER = "sonarserver"
+        SONNARSCANNER = "sonar6.2"
 
     }
     
@@ -53,7 +53,7 @@ pipeline {
             } 
 
             steps {
-                withSonarQubeEnv('$(SONNARSERVER)') {
+                withSonarQubeEnv("$(SONNARSERVER)") {
                     sh '''${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=vprofile \
                     -Dsonar.projectName=vprofile-repo \
                     -Dsonar.projectVersion=1.0 \
@@ -77,7 +77,15 @@ pipeline {
 
         stage('Upload to Nexus') {
             steps {
-                nexusArtifactUploader artifacts: [
+                nexusArtifactUploader (
+                credentialsId: "${NEXUS_LOGIN}", 
+                groupId: 'QA', 
+                nexusUrl: "${NEXUSIP}:${NEXUSPORT}", 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'vprofile-release', 
+                version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}"
+                artifacts: [
                     [
                         artifactId: 'vproapp',
                         classifier: '',
@@ -85,13 +93,7 @@ pipeline {
                         type: 'war'
                     ]
                 ], 
-                credentialsId: '${NEXUS_LOGIN}', 
-                groupId: 'QA', 
-                nexusUrl: '${NEXUSIP}:${NEXUSPORT}', 
-                nexusVersion: 'nexus3', 
-                protocol: 'http', 
-                repository: 'vprofile-release', 
-                version: '${env.BUILD_ID}-${env.BUILD_TIMESTAMP}'
+                )
             }
         }
     }
