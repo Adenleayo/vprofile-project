@@ -84,7 +84,7 @@ pipeline {
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
                 repository: 'vprofile-release', 
-                version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP},"
+                version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
                 artifacts: [
                   [artifactId: 'vproapp',
                    classifier: '',
