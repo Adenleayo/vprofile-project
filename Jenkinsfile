@@ -103,6 +103,7 @@ pipeline {
             // Define variables
             def jobName = env.JOB_NAME
             def buildNumber = env.BUILD_NUMBER
+            def build_timestamp = env.BUILD_TIMESTAMP
             def pipelineStatus = currentBuild.result ?: 'UNKNOWN'
             def bannerColor = pipelineStatus.toUpperCase() == 'SUCCESS' ? 'green' : 'red'
 
@@ -111,7 +112,7 @@ pipeline {
                 <html>
                     <body>
                         <div style="border: 4px solid ${bannerColor}; padding: 10px;">
-                            <h2>${jobName} - Build ${buildNumber}</h2>
+                            <h2>${jobName} - Build ${buildNumber}- ${build_timestamp}</h2>
                             <div style="background-color: ${bannerColor}; padding: 10px;">
                                 <h3 style="color: white;">Pipeline Status: ${pipelineStatus.toUpperCase()}</h3>
                             </div>
