@@ -17,7 +17,7 @@ pipeline {
         NEXUS_GRP_REPO = "vpro-maven2-group"
         NEXUS_LOGIN = "nexuslogin"
         SONARSERVER = "sonarserver"
-        SONNARSCANNER = "sonarscanner"
+        SONNARSCANNER = "sonar-scanner"
 
     }
     
@@ -86,7 +86,7 @@ pipeline {
                 repository: 'vprofile-release', 
                 version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
                 artifacts: [
-                  [artifactId: 'vproapp',
+                  [artifactId: 'vproap',
                    classifier: '',
                    file: "target/vprofile-v2.war",
                    type: 'war']
