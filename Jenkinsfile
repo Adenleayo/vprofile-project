@@ -86,7 +86,7 @@ pipeline {
                 repository: 'vprofile-release', 
                 version: "${env.BUILD_ID}-${env.BUILD_TIMESTAMP}",
                 artifacts: [
-                  [artifactId: 'vproap',
+                  [artifactId: 'vproapp',
                    classifier: '',
                    file: "target/vprofile-v2.war",
                    type: 'war']
