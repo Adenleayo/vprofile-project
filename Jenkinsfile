@@ -17,7 +17,7 @@ pipeline {
         NEXUS_GRP_REPO = "vpro-maven2-group"
         NEXUS_LOGIN = "nexuslogin"
         SONARSERVER = "SonarServer"
-        SONNARSCANNER = "SonarScanner"
+        SONARSCANNER = "SonarScanner"
 
     }
     
@@ -49,7 +49,7 @@ pipeline {
 
         stage("sonar analysis") {
             environment {
-                scannerHome = tool "${SONNARSCANNER}"
+                scannerHome = tool "${SONARSCANNER}"
             } 
 
             steps {
