@@ -1,5 +1,5 @@
 #!/bin/bash
-yum install java-1.8.0-openjdk.x86_64 wget -y   
+yum install java-11-openjdk.x86_64 unzip git wget -y   
 mkdir -p /opt/nexus/   
 mkdir -p /tmp/nexus/                           
 cd /tmp/nexus/
