@@ -101,7 +101,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build( appRegistry + ":$BUILD_NUMBER-$BUILD_TIMESTAMP", "./Docker-files/app/multistage/" )
+                    dockerImage = docker.build( ${appRegistry} + ":$BUILD_NUMBER-$BUILD_TIMESTAMP", "./Docker-files/app/multistage/" )
                 }
             }
         }
@@ -109,7 +109,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    docker.withRegistry(vprofileRegistry, registryCredentials) {
+                    docker.withRegistry( ${vprofileRegistry}, ${registryCredentials} ) {
                         dockerImage.push("$BUILD_NUMBER-$BUILD_TIMESTAMP")
                         dockerImage.push('latest')
                     }
